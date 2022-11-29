@@ -15,7 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const { StartLogger } = require("./utils/logService.js");
-// const { syncDB_force, testConnect } = require("./service/database");
 
 const requestLogger = require("./middleware/logger.js");
 const homeMiddleware = require("./middleware/home.js");
@@ -56,13 +55,6 @@ app.use("*", pathErrorMiddleware);
 
 app.listen(PORT, async () => {
   try {
-    // await syncDB_force(false);
-    // const db_test = await testConnect();
-
-    // if (!db_test) {
-    //   throw new Error("DB connection failed");
-    // }
-
     console.log(
       `
   =====================================
