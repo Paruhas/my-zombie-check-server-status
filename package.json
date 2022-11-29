@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "local": "SET NODE_ENV=local&&nodemon app.js --ext js",
     "dev": "export NODE_ENV=development&&nodemon app.js --ext js",
-    "production": "SET NODE_ENV=production&&nodemon app.js --ext js",
+    "production": "export NODE_ENV=production&&nodemon app.js --ext js",
     "serverTest": "pm2 start --name='__project__' npm -- run dev",
-    "server": "pm2 start --name='__project__' production -- production"
+    "server": "pm2 start --name='__project__' npm -- run production"
   },
   "keywords": [],
   "author": "",
