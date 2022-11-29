@@ -17,6 +17,19 @@ exports.showTime = () => {
 
 exports.fetchCheckServerStatus = async () => {
   try {
+    if (!process.env.PM2_PROJECT_NAME) {
+      throw new Error("no parameter 'PM2_PROJECT_NAME'");
+    }
+    if (!process.env.PM2_PROJECT_URL) {
+      throw new Error("no parameter 'PM2_PROJECT_URL'");
+    }
+    if (!process.env.PM2_PROJECT_USERNAME) {
+      throw new Error("no parameter 'PM2_PROJECT_USERNAME'");
+    }
+    if (!process.env.PM2_PROJECT_PASSWORD) {
+      throw new Error("no parameter 'PM2_PROJECT_PASSWORD'");
+    }
+    
     const { checker, result } = await checkServerStatus();
 
     const id = dayjs().utc().valueOf();
