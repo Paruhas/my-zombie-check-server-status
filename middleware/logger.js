@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     const date = dayjs(id).utc().format("YYYY-MM-DD HH:mm:ss:SSSZ");
     let finish = null;
 
-    console.log(`[START]${id}|${date} >>> ${method} => ${originalUrl} : -ms`);
+    console.log(`[START] ${id}|${date} >>> ${method} => ${originalUrl} : -ms`);
     if (process.env.NODE_ENV !== "production") {
       if (
         originalUrl.search("login") === -1 &&
@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
     res.on("close", () => {
       const duration = finish - start;
       console.log(
-        `[CLOSE]${id}|${date} >>> ${method} => ${originalUrl} : ${duration}ms`
+        `[CLOSE] ${id}|${date} >>> ${method} => ${originalUrl} : ${duration}ms`
       );
 
       writeLog_request(id, date, method, originalUrl, { body, query, params });

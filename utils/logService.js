@@ -15,6 +15,12 @@ const reqDir = "./logs/request";
 const reqPath = () => {
   return `${reqDir}/request_${dayjs().utc().format("YYYY-MM-DD")}.log`;
 };
+const restartServerDir = "./logs/restart";
+const restartServerPath = () => {
+  return `${restartServerDir}/restart_${dayjs()
+    .utc()
+    .format("YYYY-MM-DD")}.log`;
+};
 
 const tsFormat = () =>
   dayjs().utc().format("YYYY-MM-DD HH:mm:ss:SSS").toString();
@@ -43,10 +49,19 @@ if (!fs.existsSync(reqDir)) {
     console.log(`create folder successful at ${reqDir}.`);
   });
 }
+if (!fs.existsSync(restartServerDir)) {
+  fs.mkdir(restartServerDir, { recursive: true }, (err) => {
+    if (err) {
+      return console.log("create folder error: " + err);
+    }
+    console.log(`create folder successful at ${restartServerDir}.`);
+  });
+}
 
 let loggers;
 let throwLoggers;
 let requestLoggers;
+let restartServerLoggers;
 
 function CreateNewLoggers(level = "info", filename = null) {
   return winston.createLogger({
@@ -80,10 +95,14 @@ function StartLogger() {
     if (requestLoggers) {
       requestLoggers.clear();
     }
+    if (restartServerLoggers) {
+      restartServerLoggers.clear();
+    }
 
     loggers = CreateNewLoggers("info", logPath());
     throwLoggers = CreateNewLoggers("error", throwLogPath());
     requestLoggers = CreateNewLoggers("info", reqPath());
+    restartServerLoggers = CreateNewLoggers("info", restartServerPath());
 
     console.log("+++++ Logger SUCCESS +++++");
   } catch (error) {
@@ -155,9 +174,30 @@ const writeLog_request = (id, date, method, originalUrl, req) => {
   return;
 };
 
+const writeLog_restartServer = (message, key) => {
+  const logs =
+    restartServerLoggers || CreateNewLoggers("info", restartServerPath());
+
+  if (!restartServerLoggers) {
+    StartLogger();
+  }
+
+  const logDateTime = `${dayjs().utc().format("YYYY-MM-DD HH:mm:ss:SSSZ")}`;
+
+  logs.log({
+    level: "info",
+    time: logDateTime,
+    key,
+    message,
+  });
+
+  return;
+};
+
 module.exports = {
   StartLogger,
   writeLog_info,
   writeLog_throw,
   writeLog_request,
+  writeLog_restartServer,
 };
