@@ -1,0 +1,28 @@
+{
+  "name": "test-line-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "SET NODE_ENV=local&&nodemon app.js --ext js",
+    "dev": "export NODE_ENV=development&&nodemon app.js --ext js",
+    "production": "SET NODE_ENV=production&&nodemon app.js --ext js",
+    "serverTest": "pm2 start --name='__project__' npm -- run dev",
+    "server": "pm2 start --name='__project__' production -- production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.4",
+    "decimal.js": "^10.3.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "node-schedule": "^2.1.0",
+    "winston": "^3.8.2"
+  }
+}
