@@ -19,11 +19,11 @@ exports.fetchCheckServerStatus = async () => {
   try {
     const { checker, result } = await checkServerStatus();
 
-    if (!checker && result) {
-      const id = dayjs().utc().valueOf();
-      const start = id;
-      const date = dayjs(id).utc().format("YYYY-MM-DD HH:mm:ss:SSSZ");
+    const id = dayjs().utc().valueOf();
+    const start = id;
+    const date = dayjs(id).utc().format("YYYY-MM-DD HH:mm:ss:SSSZ");
 
+    if (!checker && result) {
       console.log(
         `[CHECK_SERVER_STATUS] ${id}|${date} >>> ${process.env.PM2_PROJECT_NAME} => SERVER IS ERROR`
       );
