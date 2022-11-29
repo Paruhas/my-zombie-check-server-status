@@ -29,7 +29,7 @@ exports.fetchCheckServerStatus = async () => {
     if (!process.env.PM2_PROJECT_PASSWORD) {
       throw new Error("no parameter 'PM2_PROJECT_PASSWORD'");
     }
-    
+
     const { checker, result } = await checkServerStatus();
 
     const id = dayjs().utc().valueOf();
@@ -79,7 +79,7 @@ exports.fetchCheckServerStatus = async () => {
 };
 
 async function checkServerStatus() {
-  const result = { checker: true, result: "error" };
+  const result = { checker: false, result: "error" };
 
   try {
     const basicAuth = Buffer.from(
@@ -99,10 +99,10 @@ async function checkServerStatus() {
       throw new Error(checkServerStatus.data);
     }
 
-    result.checker = false;
+    result.checker = true;
     result.result = checkServerStatus.data;
   } catch (error) {
-    result.checker = true;
+    result.checker = false;
     result.result = error;
   }
 
